@@ -325,21 +325,42 @@
             }
         }
 
-        .date-footer {
+        .footer-container {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: white;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            cursor: pointer;
-            user-select: none;
+            text-align: center;
             z-index: 100;
         }
 
-        .date-footer:hover {
-            opacity: 1;
+        .love-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .love-text:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .click-hint {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .date-footer {
+            color: white;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            user-select: none;
         }
 
         /* Mobile optimization */
@@ -370,7 +391,7 @@
     <div class="container">
         <!-- Main Question Page -->
         <div id="questionPage">
-            <h1>💕 Hey Disha! 💕</h1>
+            <h1>💕 Hey Disu! 💕</h1>
             <div class="question">
                 <h2>Will You Be My Valentine?</h2>
                 <div class="buttons-container">
@@ -386,7 +407,8 @@
             <div class="meme-box">
                 <img id="memeImage" src="" alt="Meme">
                 <p id="memeText"></p>
-                <button id="yesBtn2" style="position: relative; left: 0; top: 0; transform: none;">Okay fine, YES! 💕</button>
+                <button id="yesBtn2" style="position: relative; left: 0; top: 0; transform: none; margin-right: 10px;">Fine, YES! 💕</button>
+                <button id="noBtn2" style="position: relative; left: 0; top: 0; transform: none; background: linear-gradient(135deg, #95A5A6, #7F8C8D);">No (5 left)</button>
             </div>
         </div>
 
@@ -395,48 +417,50 @@
             <h1>🎉 YAY! 🎉</h1>
             <div class="success-message">
                 <h2>Mission Accomplished!</h2>
-                <p>You've made me the happiest person alive, Disha! ❤️</p>
+                <p>Thank you for accepting my Proposal... Love you, always !!!! ❤️</p>
                 <p style="margin-top: 15px;">I love you so much! Can't wait to celebrate our love on 29 Dec 2025! 💑</p>
             </div>
             <button class="reset-btn" onclick="resetGame()">Play Again! 🔄</button>
         </div>
     </div>
 
-    <!-- Date footer for secret easter egg -->
-    <div class="date-footer" id="dateFooter">29 Dec 2025</div>
+    <!-- Footer with I love you and date -->
+    <div class="footer-container">
+        <div class="love-text" id="loveText">💕 I Love You 💕</div>
+        <div class="click-hint">(Click me 10 times to send this message!)</div>
+        <div class="date-footer">Together since 29 Dec 2025 🎉<br></div>
+    </div>
 
     <script>
-        // Meme data (popular international + Indian memes)
+        // Meme data - 5 different memes for 5 No clicks
         const memes = [
             {
                 url: 'https://i.imgflip.com/2fm6x.jpg', // Mocking SpongeBob
-                text: 'nO i WoN\'t Be YoUr VaLeNtInE... Really, Disu? 🥺'
-            },
-            {
-                url: 'https://i.imgflip.com/3oevdk.jpg', // Disappointed Pakistani Cricket Fan
-                text: 'When you said no... My heart right now 💔'
+                text: '"No ThAnKs"... Really, Disu? You\'re breaking my heart here! 💔'
             },
             {
                 url: 'https://i.imgflip.com/30b1gx.jpg', // Drake Hotline Bling
-                text: 'Saying no to me ❌\nSaying yes to me ✅'
+                text: 'Saying no to me ❌ \nSaying yes to being my Valentine ✅ \nChoose wisely! 😏'
+            },
+            {
+                url: 'https://i.imgflip.com/3oevdk.jpg', // Disappointed Pakistani Cricket Fan
+                text: 'My face watching you click "No" for the third time... 😭\nCome on, Disha!'
             },
             {
                 url: 'https://i.imgflip.com/1bij.jpg', // Success Kid
-                text: 'Tried to say no...\nBut the button won\'t let you! 😎'
+                text: 'Tried to say no 4 times... \nBut love always wins! 💪❤️\nOne more chance!'
             },
             {
                 url: 'https://i.imgflip.com/26am.jpg', // Disaster Girl
-                text: 'Me watching you try to click no... 🔥😈'
+                text: 'Me after you clicked "No" 5 times... 🔥\nOkay fine, I give up! Just say YES already! 😤'
             }
         ];
 
         let noClickCount = 0;
-        let yesButtonScale = 1;
-        let noBtnBaseSize = 0.9;
         const maxNoClicks = 5;
 
         // Easter egg counters
-        let dateClickCount = 0;
+        let loveClickCount = 0;
         let typedString = '';
         const secretCode = 'ILOVEYOU';
 
@@ -449,7 +473,7 @@
         const yesBtn2 = document.getElementById('yesBtn2');
         const memeImage = document.getElementById('memeImage');
         const memeText = document.getElementById('memeText');
-        const dateFooter = document.getElementById('dateFooter');
+        const loveText = document.getElementById('loveText');
 
         // Create floating hearts background
         function createFloatingHearts() {
@@ -467,70 +491,34 @@
 
         createFloatingHearts();
 
-        // Make No button dodge
-        function dodgeButton() {
+        // Handle No button clicks - show progressive memes
+        function handleNoClick() {
             if (noClickCount >= maxNoClicks) {
-                showMemeSection();
                 return;
             }
 
-            noClickCount++;
-            
-            // Shrink No button
-            noBtnBaseSize -= 0.15;
-            noBtn.classList.add('shrinking');
-            setTimeout(() => noBtn.classList.remove('shrinking'), 300);
-            
-            // Grow Yes button
-            yesButtonScale += 0.2;
-            yesBtn.style.transform = `translateX(-50%) scale(${yesButtonScale})`;
-
-            // Move No button to random position
-            const container = document.querySelector('.buttons-container');
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
-            
-            const maxX = containerRect.width - btnRect.width;
-            const maxY = containerRect.height - btnRect.height;
-            
-            let newX, newY;
-            do {
-                newX = Math.random() * maxX;
-                newY = Math.random() * maxY;
-            } while (Math.abs(newX - containerRect.width/2 + btnRect.width/2) < 80);
-            
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-            noBtn.style.transform = `scale(${noBtnBaseSize})`;
-        }
-
-        // Mobile touch handler for No button
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            dodgeButton();
-        });
-
-        // Desktop hover handler for No button
-        noBtn.addEventListener('mouseenter', () => {
-            dodgeButton();
-        });
-
-        // Click handler (backup)
-        noBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            dodgeButton();
-        });
-
-        // Show meme section
-        function showMemeSection() {
+            // Show meme immediately
             questionPage.style.display = 'none';
             memeSection.style.display = 'block';
             
-            // Pick random meme
-            const randomMeme = memes[Math.floor(Math.random() * memes.length)];
-            memeImage.src = randomMeme.url;
-            memeText.textContent = randomMeme.text;
+            // Display the corresponding meme
+            memeImage.src = memes[noClickCount].url;
+            memeText.textContent = memes[noClickCount].text;
+            
+            noClickCount++;
+            
+            // Update button text based on clicks remaining
+            if (noClickCount < maxNoClicks) {
+                const clicksLeft = maxNoClicks - noClickCount;
+                document.getElementById('noBtn2').textContent = `No (${clicksLeft} left)`;
+            } else {
+                // Last click - only Yes button remains
+                document.getElementById('noBtn2').style.display = 'none';
+            }
         }
+
+        // No button click handler
+        noBtn.addEventListener('click', handleNoClick);
 
         // Yes button handlers
         function showSuccess() {
@@ -542,6 +530,10 @@
 
         yesBtn.addEventListener('click', showSuccess);
         yesBtn2.addEventListener('click', showSuccess);
+        
+        // No button in meme section
+        const noBtn2 = document.getElementById('noBtn2');
+        noBtn2.addEventListener('click', handleNoClick);
 
         // Confetti explosion
         function createConfetti() {
@@ -564,30 +556,27 @@
         // Reset game
         function resetGame() {
             noClickCount = 0;
-            yesButtonScale = 1;
-            noBtnBaseSize = 0.9;
-            
-            yesBtn.style.transform = 'translateX(-50%) scale(1)';
-            noBtn.style.left = '50%';
-            noBtn.style.top = '100px';
-            noBtn.style.transform = 'translateX(-50%) scale(1)';
             
             questionPage.style.display = 'block';
             memeSection.style.display = 'none';
             successPage.style.display = 'none';
+            
+            // Reset No button in meme section
+            document.getElementById('noBtn2').style.display = 'inline-block';
+            document.getElementById('noBtn2').textContent = 'No (5 left)';
         }
 
-        // Easter Egg 1: Click date 10 times
-        dateFooter.addEventListener('click', () => {
-            dateClickCount++;
-            if (dateClickCount === 10) {
+        // Easter Egg 1: Click "I Love You" text 10 times
+        loveText.addEventListener('click', () => {
+            loveClickCount++;
+            if (loveClickCount === 10) {
                 const secretMsg = document.createElement('div');
                 secretMsg.className = 'secret-love';
                 secretMsg.textContent = '❤️ I Love You Too! ❤️';
                 document.body.appendChild(secretMsg);
                 
                 setTimeout(() => secretMsg.remove(), 3000);
-                dateClickCount = 0;
+                loveClickCount = 0;
             }
         });
 
