@@ -392,7 +392,7 @@
     <div class="container">
         <!-- Main Question Page -->
         <div id="questionPage">
-            <h1>💕 Hey Disu! 💕</h1>
+            <h1>💕 Hey Disha! 💕</h1>
             <div class="question">
                 <h2>Will You Be My Valentine?</h2>
                 <div class="buttons-container">
@@ -418,10 +418,15 @@
             <h1>🎉 YAY! 🎉</h1>
             <div class="success-message">
                 <h2>Mission Accomplished!</h2>
-                <p>Thank you for accepting my Proposal Disu...  ❤️</p>
-                <p style="margin-top: 15px;">Love you, always !!!! 💑</p>
+                <p>You've made me the happiest person alive, Disha! ❤️</p>
+                <p style="margin-top: 15px;">I love you so much! Can't wait to celebrate our love on 29 Dec 2025! 💑</p>
             </div>
             <button class="reset-btn" onclick="resetGame()">Play Again! 🔄</button>
+            <div style="margin-top: 30px;">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnVkZWd3MWMyYm4wYnptOXNwMWl5dTY3bWRjdXJqNXZ6NzNwZnRidSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif" 
+                     alt="Celebration" 
+                     style="max-width: 250px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            </div>
         </div>
     </div>
 
@@ -429,7 +434,7 @@
     <div class="footer-container">
         <div class="love-text" id="loveText">💕 I Love You 💕</div>
         <div class="click-hint">(Click me 10 times to send this message!)</div>
-        <div class="date-footer">Together since 29 Dec 2025 🎉<br></div>
+        <div class="date-footer">Together since 29 Dec 2025 🎉<br>(Yes, the future! 😄)</div>
     </div>
 
     <script>
@@ -440,8 +445,8 @@
                 text: '"No ThAnKs"... Really, Disu? You\'re breaking my heart here! 💔'
             },
             {
-                url: 'https://i.imgflip.com/30b1gx.jpg', // Drake Hotline Bling
-                text: 'Saying no to me ❌ \nSaying yes to being my Valentine ✅ \nChoose wisely! 😏'
+                url: 'https://i.imgflip.com/6vwie2.jpg', // Akshay Kumar Hera Pheri Paresh Rawal
+                text: 'Disu saying "No"... \nMe: "Ye kya ho raha hai? 😵‍💫" \nMy brain: "Confusion intensifies!"'
             },
             {
                 url: 'https://i.imgflip.com/3oevdk.jpg', // Disappointed Pakistani Cricket Fan
@@ -573,7 +578,14 @@
             if (loveClickCount === 10) {
                 const secretMsg = document.createElement('div');
                 secretMsg.className = 'secret-love';
-                secretMsg.textContent = '❤️ I Love You Too! ❤️';
+                secretMsg.innerHTML = `
+                    <div style="text-align: center;">
+                        <div>❤️ Message Sent! I Love You Too! ❤️</div>
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTBsdHB2azJ5bjBrZnRnNmM0eXh5aHRxdG1pOGkwOGZjcDZ2N2x6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT77XWum9yH7zNkFW0/giphy.gif" 
+                             style="max-width: 200px; margin-top: 20px; border-radius: 15px;" 
+                             alt="Love">
+                    </div>
+                `;
                 document.body.appendChild(secretMsg);
                 
                 setTimeout(() => secretMsg.remove(), 3000);
